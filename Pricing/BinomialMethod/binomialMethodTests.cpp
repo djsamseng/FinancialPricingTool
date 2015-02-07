@@ -2,13 +2,15 @@
 #include <cmath>
 #include <assert.h>
 
-#include "BinomialMethod.h"
+#include "BinomialMethodEuropean.h"
+#include "BinomialMethodAmerican.h"
 #include "BinomialMethodStrategies/CRRBinomialStrategy.h"
 #include "BinomialMethodStrategies/JRBinomialStrategy.h"
 #include "BinomialMethodStrategies/ModifiedCRRBinomialStrategy.h"
 #include "BinomialMethodStrategies/EQPBinomialStrategy.h"
 #include "BinomialMethodStrategies/TRGBinomialStrategy.h"
 #include "../../Models/FinancialModels/EuropeanOption.h"
+#include "../../Models/FinancialModels/AmericanOption.h"
 
 void testBinomialStrategies() {
     std::cout << "Running Binomial Method Strategies Tests" << std::endl;
@@ -35,15 +37,26 @@ void testBinomialMethod() {
     double discount_rate = exp(-1 * opt->interestRate() * delta);
 
     CRRBinomialStrategy<double> *strategy = new CRRBinomialStrategy<double>(opt->interestRate(), opt->volatility(), delta);
-    BinomialMethod<double> solver(discount_rate, strategy);
+    BinomialMethodEuropean<double> solver(discount_rate, strategy);
     solver.buildLattice(number_steps, initial_underlying);
-    
-    solver.calculatePayoff(opt);
-    //Calculate payoff vector
 
-    std::cout << "Price: " << solver.price() << std::endl;
+    std::cout << "Price: " << solver.price(opt) << std::endl;
+    
     delete opt;
     delete strategy;
+
+    AmericanOption<double> *aOpt = new AmericanOption<double>;
+    aOpt->setStrike(150.0);
+    aOpt->setIsCall(true);
+
+    CRRBinomialStrategy<double> *aStrategy = new CRRBinomialStrategy<double>(aOpt->interestRate(), aOpt->volatility(), delta);
     
+    BinomialMethodAmerican<double> aSolver(discount_rate, aStrategy);
+    aSolver.buildLattice(number_steps, initial_underlying);
+    std::cout << "Price American: " << aSolver.price(aOpt) << std::endl;
+
+    delete aOpt;
+    delete aStrategy;
+
     std::cout << "BinomialMethod Tests Complete" << std::endl;
 }
