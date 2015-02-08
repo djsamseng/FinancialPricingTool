@@ -12,6 +12,8 @@ class BinomialStrategy {
         BinomialStrategy() : _binomial_type(MultBinomialType) {}
         BinomialStrategy(BinomialType binomial_type) : _binomial_type(binomial_type) {}
         BinomialStrategy(BinomialType binomial_type, double interest, double volatility, double delta) : _binomial_type(binomial_type), _interest(interest), _volatility(volatility), _delta(delta) {}
+        virtual ~BinomialStrategy() {}
+
         const T& upValue() const { return _up; }
         const T& downValue() const { return _down; }
         double probValue() const { return _probValue; }
@@ -27,7 +29,10 @@ class BinomialStrategy {
         void setInterest(double interest) { _interest = interest; }
         void setDelta(double delta) { _delta = delta; }
         void setBinomialType(BinomialType binomial_type) { _binomial_type = binomial_type; }
+        
+        virtual void build() = 0;
 
+        virtual BinomialStrategy<T>& operator=(const BinomialStrategy<T>& source);
     protected:
         T _up;
         T _down;
@@ -37,5 +42,20 @@ class BinomialStrategy {
         double _delta;
 
         BinomialType _binomial_type;
-};
+
+        };
+
+template <class T>
+BinomialStrategy<T>& BinomialStrategy<T>::operator=(const BinomialStrategy<T>& source) {
+    if (this != &source) {
+        _up = source._up;
+        _down = source._down;
+        _probValue = source._probValue;
+        _volatility = source._volatility;
+        _interest = source._interest;
+        _delta = source._delta;
+        _binomial_type = source._binomial_type;
+    }
+    return *this;
+}
 #endif

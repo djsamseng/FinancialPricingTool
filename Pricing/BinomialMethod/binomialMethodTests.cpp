@@ -38,9 +38,11 @@ void testBinomialMethod() {
 
     CRRBinomialStrategy<double> *strategy = new CRRBinomialStrategy<double>(opt->interestRate(), opt->volatility(), delta);
     BinomialMethodEuropean<double> solver(discount_rate, strategy);
-    solver.buildLattice(number_steps, initial_underlying);
+    solver.constructLattice(number_steps, initial_underlying, opt);
 
-    std::cout << "Price: " << solver.price(opt) << std::endl;
+    std::cout << "Price: " << solver.price() << std::endl;
+    std::cout << "Delta: " << solver.delta() << std::endl;
+    std::cout << "Vega: " << solver.vega(discount_rate, strategy, opt) << std::endl;
     
     delete opt;
     delete strategy;
@@ -52,8 +54,10 @@ void testBinomialMethod() {
     CRRBinomialStrategy<double> *aStrategy = new CRRBinomialStrategy<double>(aOpt->interestRate(), aOpt->volatility(), delta);
     
     BinomialMethodAmerican<double> aSolver(discount_rate, aStrategy);
-    aSolver.buildLattice(number_steps, initial_underlying);
-    std::cout << "Price American: " << aSolver.price(aOpt) << std::endl;
+    aSolver.constructLattice(number_steps, initial_underlying, aOpt);
+    std::cout << "Price American: " << aSolver.price() << std::endl;
+    std::cout << "Delta American: " << aSolver.delta() << std::endl;
+    std::cout << "Vega American: " << aSolver.vega(discount_rate, aStrategy, aOpt) << std::endl;
 
     delete aOpt;
     delete aStrategy;

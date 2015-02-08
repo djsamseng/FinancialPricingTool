@@ -12,6 +12,7 @@ class EuropeanOption : public Option<T> {
         public:
         EuropeanOption() : Option<T>() {}
         virtual ~EuropeanOption() {}
+
     
         T payoff(const T&) const;
 

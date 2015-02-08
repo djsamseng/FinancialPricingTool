@@ -7,11 +7,17 @@ template <class T>
 class EQPBinomialStrategy : public BinomialStrategy<T> {
     public:
         EQPBinomialStrategy(double interest, double volatility, double delta);
+        void build();
     private:
 };
 
 template <class T>
 EQPBinomialStrategy<T>::EQPBinomialStrategy(double interest, double volatility, double delta) : BinomialStrategy<T>(ArithBinomialType, interest, volatility, delta) {
+    build();
+}
+
+template <class T>
+void EQPBinomialStrategy<T>::build() {
     double v = this->_interest - 0.5 * this->_volatility * this->_volatility;
     double a = v * this->_delta;
     double b = 0.5 * sqrt(4 * this->_volatility * this->_volatility * this->_delta - 3 * v * v * this->_delta * this->_delta);

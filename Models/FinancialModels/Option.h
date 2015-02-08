@@ -31,6 +31,8 @@ class Option : public Derivative<T> {
 
         virtual T price() const { assert(false); return T(); }
         virtual T payoff(const T& price) const = 0;
+
+        virtual Option<T>& operator=(const Option<T>& source);
     private:
         PropertySet<int, T> _properties;//interest rate, voltatility, strike price, expiry date, current underlying price, cost of carry
         void initializeProperties();
@@ -46,6 +48,14 @@ class Option : public Derivative<T> {
         };
 
 };
+
+template <class T>
+Option<T>& Option<T>::operator=(const Option<T>& source) {
+    if (this != & source) {
+        _properties = source._properties;
+    }
+    return *this;
+}
 
 template <class T>
 void Option<T>::initializeProperties() {

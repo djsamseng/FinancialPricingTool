@@ -29,6 +29,7 @@ class PropertySet {
 
         Value& operator[](const Name& index) { return _map[index]; };
         const Value& operator[](const Name& index) const { return (_map.find(index))->second; };
+        PropertySet<Name, Value>& operator=(const PropertySet<Name, Value>& source);
     private:
         Name _name;
         Map _map;
@@ -52,6 +53,15 @@ void PropertySet<Name,Value>::remove(const Name& name) {
 template <class Name, class Value>
 void PropertySet<Name,Value>::remove(const Property<Name, Value>& property) {
     remove(property.getName());
+}
+
+template <class Name, class Value>
+PropertySet<Name, Value>& PropertySet<Name, Value>::operator=(const PropertySet<Name, Value>& source) {
+    if (this != &source) {
+        _name = source._name;
+        _map = source._map;
+    }
+    return *this;
 }
 
 #endif

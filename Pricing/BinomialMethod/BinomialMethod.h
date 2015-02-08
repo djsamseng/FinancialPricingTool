@@ -15,21 +15,21 @@ class BinomialMethod {
     //Workflow: Constructor, buildLattice, price
     public:
         BinomialMethod(double rate, BinomialStrategy<T> *strategy);
+       
+        virtual void constructLattice(int size, const T& initial_price, Option<T>* option) = 0;
+        virtual T price() const = 0;
+        virtual T delta() const = 0;
+        virtual T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const = 0;
         
-        void buildLattice(int size, const T& initialUp);
-        virtual T price(Option<T>* option) = 0;
-        
-        const NumericArray<int, T>& operator[](int index) const { return _lattice[index]; }
-        NumericArray<int, T>& operator[](int index);
-
         const Array<int, NumericArray<int, T> >& lattice() const { return _lattice; }
            
         void printLattice() const { _lattice.print(); }
     protected:
-        Lattice<int, T> _lattice;
+        Lattice<int, std::pair<T, T> > _lattice;
         BinomialStrategy<T> *_strategy;
         double _rate;//discounting
-
+        
+        void buildLattice(int size, const T& initialUp);
         void calculatePayoff(Option<T> *option);
 };
 
@@ -41,36 +41,27 @@ BinomialMethod<T>::BinomialMethod(double rate, BinomialStrategy<T> *strategy) {
 
 template <class T>
 void BinomialMethod<T>::buildLattice(int size, const T& initial_underlying_price) {
-    _lattice = Lattice<int, T>(size);
+    _lattice = Lattice<int, std::pair<T, T> >(size);
     
     double up = _strategy->upValue();
     double down = _strategy->downValue();
 
     int minRow = _lattice.minIndex();
-    _lattice[minRow][_lattice[minRow].minIndex()] = initial_underlying_price;
+    _lattice[minRow][_lattice[minRow].minIndex()].first = initial_underlying_price;
 
     for (int i = _lattice.minIndex() + 1; i <= _lattice.maxIndex(); i++) {
         for (int j = _lattice[i].minIndex(); j < _lattice[i].maxIndex(); j++) {
-            _lattice[i][j] = T(down * _lattice[i-1][j]);
-            _lattice[i][j+1] = T(up * _lattice[i-1][j]);
+            _lattice[i][j].first = T(down * _lattice[i-1][j].first);
+            _lattice[i][j+1].first = T(up * _lattice[i-1][j].first);
         }
     }
-}
-
-template <class T>
-NumericArray<int, T>& BinomialMethod<T>::operator[](int index) {
-    if (index != _lattice.maxIndex()) {
-        std::cerr << "Cannot modify non last index" << std::endl;
-        assert(false);
-    }
-    return _lattice[_lattice.maxIndex()];
 }
 
 template <class T>
 void BinomialMethod<T>::calculatePayoff(Option<T> *option) {
     int last = this->_lattice.maxIndex();
     for (int i = this->_lattice[last].minIndex(); i <= this->_lattice[last].maxIndex(); i++) {
-        this->_lattice[last][i] = option->payoff(this->_lattice[last][i]);
+        this->_lattice[last][i].second = option->payoff(this->_lattice[last][i].first);
     }
 
     if (this->_strategy->binomialType() == ArithBinomialType) {
@@ -78,4 +69,5 @@ void BinomialMethod<T>::calculatePayoff(Option<T> *option) {
         assert(false);
     }
 }
+
 #endif
