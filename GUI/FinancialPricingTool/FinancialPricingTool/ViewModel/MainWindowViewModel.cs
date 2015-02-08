@@ -9,6 +9,7 @@ namespace FinancialPricingTool.ViewModel
     public class MainWindowViewModel : WorkspaceViewModel
     {
         ObservableCollection<WorkspaceViewModel> _workspaces;
+        WorkspaceViewModel _activeWorkspace;
         public MainWindowViewModel()
         {
             base.ViewName = "Financial Pricing Tool";
@@ -17,6 +18,19 @@ namespace FinancialPricingTool.ViewModel
             _workspaces.Add(pvm);
             
             NewPortfolioCommand = new RelayCommand(param => this.CreateNewPortfolio());
+        }
+
+        public WorkspaceViewModel ActiveWorkspace
+        {
+            get
+            {
+                return _activeWorkspace;
+            }
+            set
+            {
+                _activeWorkspace = value;
+                OnPropertyChanged("ActiveWorkspace");
+            }
         }
 
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -68,11 +82,12 @@ namespace FinancialPricingTool.ViewModel
 
         void SetActiveWorkspace(WorkspaceViewModel workspace)
         {
-            ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
+            /*ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
             if (collectionView != null)
             {
                 collectionView.MoveCurrentTo(workspace);
-            }
+            }*/
+            ActiveWorkspace = workspace;
         }
     }
 }

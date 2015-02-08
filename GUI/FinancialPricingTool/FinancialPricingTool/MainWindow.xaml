@@ -17,16 +17,41 @@
         </DockPanel> 
         
         <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="5" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" Style="{StaticResource MainWindowBorderStyle}">
-                <ContentControl Content="{Binding Path=Workspaces}" ContentTemplate="{StaticResource WorkspaceTemplate}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Style="{StaticResource MainWindowBorderStyle}" Width="170">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Text="Portfolios" />
+                        <Button Content="Add Portfolio" Command="{Binding NewPortfolioCommand}" />
+                    </DockPanel>
+                    <ListBox HorizontalAlignment="Stretch" ItemsSource="{Binding Workspaces}" SelectedItem="{Binding ActiveWorkspace, UpdateSourceTrigger=PropertyChanged}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <Button Content="X"
+                                        Cursor="Hand"
+                                        DockPanel.Dock="Right"
+                                        Focusable="False"
+                                        FontSize="8"
+                                        FontFamily="Courier"
+                                        FontWeight="Bold"
+                                        VerticalContentAlignment="Bottom"
+                                        Width="15"
+                                        Height="15"
+                                        Margin="3,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
             </Border>
-            <Border Grid.Row="2" Style="{StaticResource MainWindowBorderStyle}" HorizontalAlignment="Stretch">
-                <Button HorizontalAlignment="Left" Content="Add Portfolio" Command="{Binding NewPortfolioCommand}" />
+            <Border Grid.Column="2" Style="{StaticResource MainWindowBorderStyle}">
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource WorkspaceTemplate}" />
             </Border>
         </Grid>
     </DockPanel>
