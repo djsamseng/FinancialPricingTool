@@ -1,0 +1,33 @@
+﻿<Window x:Class="FinancialPricingTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Path=ViewName}" WindowState="Maximized">
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindowResources.xaml" />
+    </Window.Resources>
+    
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
+            <Menu KeyboardNavigation.TabNavigation="Cycle">
+                <MenuItem Header="_File">
+                    <MenuItem Header="E_xit"/>
+                </MenuItem>
+                <MenuItem Header="_Edit" />
+            </Menu>
+        </DockPanel> 
+        
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource MainWindowBorderStyle}">
+                <ContentControl Content="{Binding Path=Workspaces}" ContentTemplate="{StaticResource WorkspaceTemplate}" />
+            </Border>
+            <Border Grid.Row="2" Style="{StaticResource MainWindowBorderStyle}" HorizontalAlignment="Stretch">
+                <Button HorizontalAlignment="Left" Content="Add Portfolio" Command="{Binding NewPortfolioCommand}" />
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
