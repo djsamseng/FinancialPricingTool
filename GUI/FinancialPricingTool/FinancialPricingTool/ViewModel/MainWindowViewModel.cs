@@ -82,11 +82,6 @@ namespace FinancialPricingTool.ViewModel
 
         void SetActiveWorkspace(WorkspaceViewModel workspace)
         {
-            /*ICollectionView collectionView = CollectionViewSource.GetDefaultView(this.Workspaces);
-            if (collectionView != null)
-            {
-                collectionView.MoveCurrentTo(workspace);
-            }*/
             ActiveWorkspace = workspace;
         }
     }

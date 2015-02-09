@@ -3,8 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:FinancialPricingTool.View"
+             xmlns:viewmodel="clr-namespace:FinancialPricingTool.ViewModel"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewmodel:OptionPricingViewModel}">
+                <view:OptionPricingView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <DockPanel>
         <TextBox DockPanel.Dock="Top" 
                  BorderThickness="0" 
@@ -37,7 +47,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Graph Stuff Here" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ContentControl Grid.Column="0" Content="{Binding BottomLeftUserControl}" Background="Blue"/>
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="5" />
                     <Border Grid.Column="2" >
                         <Grid Background="Beige">

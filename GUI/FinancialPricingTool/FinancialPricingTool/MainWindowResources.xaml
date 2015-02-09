@@ -27,26 +27,8 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </DataTemplate>
-
-    <DataTemplate x:Key="TabItemTemplate">
-        <!--<DockPanel Width="120">
-            <Button Content="X"
-                Cursor="Hand"
-                DockPanel.Dock="Right"
-                Focusable="False"
-                FontSize="8"
-                FontFamily="Courier"
-                FontWeight="Bold"
-                VerticalContentAlignment="Bottom"
-                Width="15"
-                Height="15"
-                Margin="3,0,0,0"/>
-            <TextBlock Text="{Binding Path=Name}" />
-        </DockPanel>-->
-    </DataTemplate>
     
     <DataTemplate x:Key="WorkspaceTemplate">
-        <!--<TabControl TabStripPlacement="Left" VerticalContentAlignment="Bottom" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource TabItemTemplate}" Margin="5"/>-->
         <ContentControl Content="{Binding ActiveWorkspace}"/>
     </DataTemplate>
     

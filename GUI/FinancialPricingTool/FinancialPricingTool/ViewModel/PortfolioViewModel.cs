@@ -12,6 +12,7 @@ namespace FinancialPricingTool.ViewModel
         {
             base.ViewName = "Portfolio";
             Name = "New Portfolio";
+            _bottomLeftUserControl = new OptionPricingViewModel();
         }
 
         private string _name;
@@ -25,6 +26,20 @@ namespace FinancialPricingTool.ViewModel
             {
                 _name = value;
                 base.OnPropertyChanged("Name");
+            }
+        }
+
+        private PortfolioUserControl _bottomLeftUserControl;
+        public PortfolioUserControl BottomLeftUserControl
+        {
+            get
+            {
+                return _bottomLeftUserControl;
+            }
+            set
+            {
+                _bottomLeftUserControl = value;
+                base.OnPropertyChanged("BottomLeftUserControl");
             }
         }
     }

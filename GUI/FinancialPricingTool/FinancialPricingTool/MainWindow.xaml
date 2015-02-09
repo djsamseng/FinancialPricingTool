@@ -51,7 +51,7 @@
                 </DockPanel>
             </Border>
             <Border Grid.Column="2" Style="{StaticResource MainWindowBorderStyle}">
-                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource WorkspaceTemplate}" />
+                <ContentControl Content="{Binding ActiveWorkspace}" />
             </Border>
         </Grid>
     </DockPanel>
