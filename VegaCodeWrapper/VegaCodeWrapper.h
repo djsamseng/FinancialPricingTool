@@ -17,6 +17,10 @@ namespace VegaCodeWrap {
 		VegaCodeWrapper();
 		~VegaCodeWrapper();
 		System::String^ sayHello();
+		double _price;
+		double _delta;
+		double _vega;
+		void calculateOption(int optionType, int binomialStrategy, int numberSteps, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall);
 	private:
 		VegaVSAPI *api;
 	};

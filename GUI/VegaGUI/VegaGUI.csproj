@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CLR\VegaCLR.cs" />
+    <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\InputValueTemplateSelector.cs" />
     <Compile Include="Utilities\Property.cs" />
     <Compile Include="Utilities\ResultValueTemplateSelector.cs" />

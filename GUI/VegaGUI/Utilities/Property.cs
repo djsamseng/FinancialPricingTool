@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace FinancialPricingTool.Utilities
 {
-    public class Property
+    public class Property : INotifyPropertyChanged
     {
         public Property(string key, object value)
         {
@@ -14,6 +10,30 @@ namespace FinancialPricingTool.Utilities
             Value = value;
         }
         public string Key { get; set; }
-        public object Value { get; set; }
+        private object _value;
+        public object Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnPropertyChanged("Value");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string property_name)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                PropertyChangedEventArgs e = new PropertyChangedEventArgs(property_name);
+                handler(this, e);
+            }
+        }
     }
 }

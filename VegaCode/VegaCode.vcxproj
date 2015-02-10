@@ -90,15 +90,21 @@
     <ClInclude Include="Models\FinancialModels\Derivative.h" />
     <ClInclude Include="Models\FinancialModels\EuropeanOption.h" />
     <ClInclude Include="Models\FinancialModels\Option.h" />
+    <ClInclude Include="Models\FinancialModels\OptionFactory.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethod.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodAmerican.h" />
+    <ClInclude Include="Pricing\BinomialMethod\BinomialMethodDriver.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodEuropean.h" />
+    <ClInclude Include="Pricing\BinomialMethod\BinomialMethodFactory.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\BinomialStrategy.h" />
+    <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\BinomialStrategyFactory.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\CRRBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\EQPBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\JRBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\ModifiedCRRBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\TRGBinomialStrategy.h" />
+    <ClInclude Include="Utility\BinomialStrategyType.h" />
+    <ClInclude Include="Utility\OptionType.h" />
     <ClInclude Include="VegaVSAPI.h" />
   </ItemGroup>
   <ItemGroup>
