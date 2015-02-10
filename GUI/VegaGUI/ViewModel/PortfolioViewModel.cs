@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinancialPricingTool.CLR;
 
 namespace FinancialPricingTool.ViewModel
 {
@@ -13,6 +14,8 @@ namespace FinancialPricingTool.ViewModel
             base.ViewName = "Portfolio";
             Name = "New Portfolio";
             _bottomLeftUserControl = new OptionPricingViewModel();
+
+            VegaCLR clr = new VegaCLR();
         }
 
         private string _name;

@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CLR\VegaCLR.cs" />
     <Compile Include="Utilities\InputValueTemplateSelector.cs" />
     <Compile Include="Utilities\Property.cs" />
     <Compile Include="Utilities\ResultValueTemplateSelector.cs" />
@@ -124,6 +125,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\VegaCodeWrapper\VegaCodeWrapper.vcxproj">
+      <Project>{74d097f6-f6af-47b0-ab2a-4eabab47b97d}</Project>
+      <Name>VegaCodeWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
