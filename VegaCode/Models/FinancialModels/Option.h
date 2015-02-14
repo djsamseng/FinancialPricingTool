@@ -19,7 +19,8 @@ class Option : public Derivative<T> {
         const T& currentPrice() const { return _properties[CURRENT_PRICE]; }//current underlying price
         const T& costOfCarry() const { return _properties[COST_OF_CARRY]; }
         bool isCall() const { return _properties[CALL] == 1 ? true : false; }
-
+        
+        void set(const T& ir, const T& vol, const T& strike, const T& expiry, const T& currentP, const T& carry, bool isCall);
         void setInterestRate(const T& val) { _properties[INTEREST_RATE] = val; }
         void setVolatility(const T& val) { _properties[VOLATILITY] = val; }
         void setStrike(const T& val) { _properties[STRIKE] = val; }
@@ -66,6 +67,17 @@ void Option<T>::initializeProperties() {
     _properties.add(CURRENT_PRICE, T() + 60.0);
     _properties.add(COST_OF_CARRY, T() + 0.08);
     _properties.add(CALL, T());
+}
+
+template <class T>
+void Option<T>::set(const T& ir, const T& vol, const T& strike, const T& expiry, const T& currentP, const T& carry, bool isCall) {
+    setInterestRate(ir);
+    setVolatility(vol);
+    setStrike(strike);
+    setExpiry(expiry);
+    setCurrentPrice(currentP);
+    setCostOfCarry(carry);
+    setIsCall(isCall);
 }
 
 

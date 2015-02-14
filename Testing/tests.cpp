@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "../Pricing/BinomialMethod/binomialMethodTests.cpp"
+#include "../Pricing/BlackScholes/testBlackScholes.cpp"
 #include "../Models/FinancialModels/financialModelTests.cpp"
 #include "../DataStructures/dataStructuresTests.cpp"
 
@@ -17,5 +18,6 @@ int main() {
     testNumericMatrix();
     testMesher();
     testPricing();
+    testBlackScholes();
     return 0;
 }

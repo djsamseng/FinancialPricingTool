@@ -21,6 +21,7 @@ class Matrix {
         V& operator()(I row, I col) { return _matrix[row][col]; }
         const V& operator()(I row, I col) const { return _matrix[row][col]; }
         Matrix<I, V, S>& operator=(const Matrix<I, V, S>& s);
+
     private:
         S _matrix;
         I _row_start;
@@ -36,4 +37,5 @@ Matrix<I, V, S>& Matrix<I, V, S>::operator=(const Matrix<I, V, S>& s) {
     }
     return *this;
 }
+
 #endif

@@ -20,6 +20,7 @@ class NumericMatrix : public Matrix<I, V, S> {
        NumericMatrix<I, V, S> operator-(const NumericMatrix<V, I, S>& mat) const;
        NumericMatrix<I, V, S> operator*(const NumericMatrix<V, I, S>& mat) const;
        NumericArray<I, V> operator*(const NumericArray<I, V>& vec) const;
+
     private:
 
 };

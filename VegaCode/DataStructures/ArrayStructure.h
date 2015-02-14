@@ -27,6 +27,8 @@ class ArrayStructure : public StructureInterface<int, V>{
         const V& operator[] (size_t index) const { return _vector[index]; }	
 
         ArrayStructure<V>& operator = (const ArrayStructure<V>& source);
+
+        void print() const;
 };
 
 
@@ -57,6 +59,5 @@ ArrayStructure<V>& ArrayStructure<V>::operator=(const ArrayStructure<V>& source)
 	_vector = source._vector;
 	return *this;
 }
-
 
 #endif

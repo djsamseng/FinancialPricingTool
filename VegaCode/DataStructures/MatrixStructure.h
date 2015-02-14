@@ -16,6 +16,7 @@ class MatrixStructure {
         ArrayStructure<T>& operator[](size_t index) { return _matrix[index]; }
         const ArrayStructure<T>& operator[](size_t index) const { return _matrix[index]; }
         MatrixStructure<T>& operator=(const MatrixStructure<T>& s);
+
     private:
         ArrayStructure<ArrayStructure<T> > _matrix;
 };
