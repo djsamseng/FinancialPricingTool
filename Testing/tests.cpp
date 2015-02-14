@@ -7,12 +7,15 @@
 #include "../DataStructures/dataStructuresTests.cpp"
 
 
-
 int main() {
     testBinomialStrategies();
     testBinomialMethod();
     testEuropeanOption();
     testNumericArray();
     testLattice();
+    testMatrix();
+    testNumericMatrix();
+    testMesher();
+    testPricing();
     return 0;
 }
