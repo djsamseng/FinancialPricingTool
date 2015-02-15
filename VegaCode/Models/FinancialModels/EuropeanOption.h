@@ -10,7 +10,7 @@
 template <class T>
 class EuropeanOption : public Option<T> {
         public:
-        EuropeanOption() : Option<T>() {}
+        EuropeanOption() : Option<T>(EuropeanOptionType) {}
         virtual ~EuropeanOption() {}
 
     

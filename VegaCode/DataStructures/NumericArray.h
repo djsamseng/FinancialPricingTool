@@ -4,15 +4,15 @@
 #include "Array.h"
 
 template <class I, class V, class C=ArrayStructure<V> >
-class NumericArray: public Array<I, V, C> {
+class NumericArray: public DS::Array<I, V, C> {
 private:
 public:
 	// Constructors & destructor
-	NumericArray() : Array<I, V, C>() {}
-    NumericArray(I size) : Array<I, V, C>(size) {}
-	NumericArray(I size, const V& value) : Array<I, V, C>(size, value) {}
-    NumericArray(const NumericArray<I, V, C>& source) : Array<I, V, C>(source) {}
-    NumericArray(const Array<I, V, C>& source) : Array<I, V, C>(source) {}
+	NumericArray() : DS::Array<I, V, C>() {}
+    NumericArray(I size) : DS::Array<I, V, C>(size) {}
+	NumericArray(I size, const V& value) : DS::Array<I, V, C>(size, value) {}
+    NumericArray(const NumericArray<I, V, C>& source) : DS::Array<I, V, C>(source) {}
+    NumericArray(const Array<I, V, C>& source) : DS::Array<I, V, C>(source) {}
     virtual ~NumericArray() {}
 
 	// Operators

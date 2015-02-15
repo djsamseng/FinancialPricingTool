@@ -10,7 +10,7 @@
 template <class T>
 class AmericanOption : public Option<T> {
     public:
-        AmericanOption() : Option<T>() {}
+        AmericanOption() : Option<T>(AmericanOptionType) {}
         virtual ~AmericanOption() {}
     
         T payoff(const T&) const;

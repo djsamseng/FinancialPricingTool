@@ -13,32 +13,23 @@ template <class T>
 class BinomialMethodDriver {
 public:
 	BinomialMethodDriver() {}
-	void calculateOption(OptionType optionType, BinomialStrategyType binomialStrategy, int numberSteps, double interestRate, double volatility, const T& strike, double expiry, const T& currentPrice, const T& costOfCarry, bool isCall, T& price, T& deltaR, T& vega);
+	void calculateOption(Option<T>* option, BinomialStrategyType binomialStrategy, int numberSteps);
+	T price, deltaR, vega;
 };
 
 template <class T>
-void BinomialMethodDriver<T>::calculateOption(OptionType optionType, BinomialStrategyType binomialStrategy, int numberSteps, double interestRate, double volatility, const T& strike, double expiry, const T& currentPrice, const T& costOfCarry, bool isCall, T& price, T& deltaR, T& vega) {
-	Option<T> *option = OptionFactory::getOption<T>(optionType);
-	option->setInterestRate(interestRate);
-	option->setVolatility(volatility);
-	option->setStrike(strike);
-	option->setExpiry(expiry);
-	option->setCurrentPrice(currentPrice);
-	option->setCostOfCarry(costOfCarry);
-	option->setIsCall(isCall);
-
+void BinomialMethodDriver<T>::calculateOption(Option<T>* option, BinomialStrategyType binomialStrategy, int numberSteps) {
 	double delta = option->expiry() / double(numberSteps);
 	double discount_rate = exp(-1 * option->interestRate() * delta);
 
-	BinomialStrategy<T> *strategy = BinomialStrategyFactory::getBinomialStrategy<T>(binomialStrategy, interestRate, volatility, delta);
-	BinomialMethod<T> *solver = BinomialMethodFactory::getBinomialMethod<T>(optionType, discount_rate, strategy);
+	BinomialStrategy<T> *strategy = BinomialStrategyFactory::getBinomialStrategy<T>(binomialStrategy, option->interestRate(), option->volatility(), delta);
+	BinomialMethod<T> *solver = BinomialMethodFactory::getBinomialMethod<T>(option->optionType(), discount_rate, strategy);
 
-	solver->constructLattice(numberSteps, currentPrice, option);
+	solver->constructLattice(numberSteps, option->currentPrice(), option);
 	price = solver->price();
 	deltaR = solver->delta();
-	vega = solver->vega(interestRate, strategy, option);
+	vega = solver->vega(option->interestRate(), strategy, option);
 
-	delete option;
 	delete strategy;
 	delete solver;
 }

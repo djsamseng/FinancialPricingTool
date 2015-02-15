@@ -32,14 +32,14 @@ class Lattice {
 
         void print() const;
     private:
-        Array<I, NumericArray<I,V> >_lattice;
+        DS::Array<I, NumericArray<I,V> >_lattice;
         LatticeType _latticeType;
 };
 
 template <class I, class V>
 Lattice<I, V>::Lattice(const I& numRows) {
     _latticeType = BinomialLatticeType;
-    _lattice = Array<I, NumericArray<I, V> >(numRows);
+    _lattice = DS::Array<I, NumericArray<I, V> >(numRows);
     int nodesInLevel = 1;
     for (int i = _lattice.minIndex(); i <= _lattice.maxIndex(); i++) {
         _lattice[i] = NumericArray<I, V>(nodesInLevel);

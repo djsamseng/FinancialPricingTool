@@ -21,7 +21,7 @@ class BinomialMethod {
         virtual T delta() const = 0;
         virtual T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const = 0;
         
-        const Array<int, NumericArray<int, T> >& lattice() const { return _lattice; }
+        const DS::Array<int, NumericArray<int, T> >& lattice() const { return _lattice; }
            
         void printLattice() const { _lattice.print(); }
     protected:

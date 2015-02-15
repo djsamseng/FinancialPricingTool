@@ -5,10 +5,10 @@
 
 #include "StructureInterface.h"
 
-template <class V>
-class ArrayStructure : public StructureInterface<int, V>{
+template <class V >
+class ArrayStructure : public StructureInterface<int, V >{
     protected:
-	    std::vector<V> _vector;
+	    std::vector<V > _vector;
         
     public:
         // Constructors & destructor
@@ -26,7 +26,7 @@ class ArrayStructure : public StructureInterface<int, V>{
         V& operator[] (int index) { assert(index >= 0 && index < _vector.size()); return _vector[index]; }							
         const V& operator[] (int index) const { assert(index >= 0 && index < _vector.size()); return _vector[index]; }	
 
-        ArrayStructure<V>& operator = (const ArrayStructure<V>& source);
+        ArrayStructure<V >& operator = (const ArrayStructure<V >& source);
 
         void print() const;
 };

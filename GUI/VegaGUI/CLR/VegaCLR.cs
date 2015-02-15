@@ -30,10 +30,14 @@ namespace FinancialPricingTool.CLR
         }
 
         public void CalculateOption(OptionType optionType, BinomialStrategyType binomialStrategyType, int numberSteps, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall, ref double price, ref double delta, ref double vega) {
-            wrapper.calculateOption((int)optionType, (int)binomialStrategyType, numberSteps, interestRate, volatility, strike, expiry, currentPrice, costOfCarry, isCall);
+            wrapper.setOption((int)optionType, interestRate, volatility, strike, expiry, currentPrice, costOfCarry, isCall);
+            wrapper.calculateOptionBinomial((int)binomialStrategyType, numberSteps);
             price = wrapper._price;
             delta = wrapper._delta;
             vega = wrapper._vega;
+            wrapper.calculateOptionBlackScholes(0, numberSteps, numberSteps);
+            double[,] test = wrapper._price_data;
+            Console.WriteLine("{0}", test[test.GetLength(0) - 1, test.GetLength(1)-1]);
         }
     }
 }

@@ -1,10 +1,12 @@
 // VegaCodeWrapper.h
 
 #pragma once
-
-#include "C:\Users\Sengs\Documents\Projects\Vega\VegaCode\VegaVSAPI.h"
 #include <string>
 #include <iostream>
+#include "..\VegaCode\Pricing\BinomialMethod\BinomialMethodDriver.h"
+#include "..\VegaCode\Pricing\BlackScholes\BlackScholesDriver.h"
+#include "..\VegaCode\Models\FinancialModels\OptionFactory.h"
+
 
 using namespace System;
 
@@ -16,12 +18,18 @@ namespace VegaCodeWrap {
 	public:
 		VegaCodeWrapper();
 		~VegaCodeWrapper();
-		System::String^ sayHello();
+
+		array<double, 2>^ _price_data;
+		
+		void setOption(int optionType, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall);
+		void calculateOptionBinomial(int strategyType, int numberSteps);
+		void calculateOptionBlackScholes(int strategyType, int tSteps, int xSteps);
+
 		double _price;
 		double _delta;
 		double _vega;
-		void calculateOption(int optionType, int binomialStrategy, int numberSteps, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall);
+		Option<double>* _option;
+
 	private:
-		VegaVSAPI *api;
 	};
 }

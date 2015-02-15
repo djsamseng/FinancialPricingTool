@@ -5,6 +5,7 @@
 
 #include "Matrix.h"
 #include "MatrixStructure.h"
+#include "NumericArray.h"
 
 template <class I, class V, class S=MatrixStructure<V> >
 class NumericMatrix : public Matrix<I, V, S> {

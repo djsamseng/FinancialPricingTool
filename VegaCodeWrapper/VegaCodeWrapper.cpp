@@ -3,27 +3,51 @@
 #include "stdafx.h"
 
 #include "VegaCodeWrapper.h"
+
 using namespace VegaCodeWrap;
 
 VegaCodeWrapper::VegaCodeWrapper() {
-	api = new VegaVSAPI();
+	_option = NULL;
 }
 
 VegaCodeWrapper::~VegaCodeWrapper() {
-	delete api;
+	if (_option != NULL) {
+		delete _option;
+		_option = NULL;
+	}
 }
 
-System::String^ VegaCodeWrapper::sayHello() {
-	std::string str = api->sayHello();
-	return gcnew String(str.c_str());
+void VegaCodeWrapper::setOption(int optionType, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall) {
+	if (_option != NULL) {
+		delete _option;
+		_option = NULL;
+	}
+	_option = OptionFactory::getOption<double>(static_cast<OptionType>(optionType));
 }
 
+void VegaCodeWrapper::calculateOptionBinomial(int binomialStrategy, int numberSteps) {
+	if (_option != NULL) {
+		BinomialMethodDriver<double> driver;
+		driver.calculateOption(_option, static_cast<BinomialStrategyType>(binomialStrategy), numberSteps);
+		_price = driver.price;
+		_delta = driver.deltaR;
+		_vega = driver.vega;
+	}
+}
 
-
-void VegaCodeWrapper::calculateOption(int optionType, int binomialStrategy, int numberSteps, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall) {
-	api->calculateOption(static_cast<OptionType>(optionType), static_cast<BinomialStrategyType>(binomialStrategy), numberSteps, interestRate, volatility, strike, expiry, currentPrice, costOfCarry, isCall);
-	_price = api->_price;
-	_delta = api->_delta;
-	_vega = api->_vega;
+void VegaCodeWrapper::calculateOptionBlackScholes(int strategyType, int tSteps, int xSteps) {
+	if (_option != NULL) {
+		BlackScholesDriver<double> driver;
+		NumericMatrix<int, double> result = driver.calculateOption(_option, static_cast<BlackScholesType>(strategyType), tSteps, xSteps);
+		_price = driver.price;
+		_delta = driver.deltaR;
+		_vega = driver.vega;
+		_price_data = gcnew array < double, 2 >(result.numRows(), result.numCols());
+		for (int i = 0; i <= result.maxRowIndex(); i++) {
+			for (int j = 0; j <= result.maxColIndex(); j++) {
+				_price_data[i, j] = result(i, j);
+			}
+		}
+	}
 }
 

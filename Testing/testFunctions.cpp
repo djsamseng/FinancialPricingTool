@@ -15,7 +15,7 @@ void print(const Matrix<I, V, S>& mat) {
 }
 
 template <class I, class V, class S>
-void print(const Array<I, V, S>& ar) {
+void print(const DS::Array<I, V, S>& ar) {
     for (I i = ar.minIndex(); i <= ar.maxIndex(); i++) {
         std::cout << ar[i] << " ";
     }

@@ -103,18 +103,22 @@
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\JRBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\ModifiedCRRBinomialStrategy.h" />
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodStrategies\TRGBinomialStrategy.h" />
+    <ClInclude Include="Pricing\BlackScholes\BlackScholesDriver.h" />
+    <ClInclude Include="Pricing\BlackScholes\BlackScholesIBVP.h" />
+    <ClInclude Include="Pricing\BlackScholes\EEulerIBVPFDM.h" />
+    <ClInclude Include="Pricing\BlackScholes\IBVP.h" />
+    <ClInclude Include="Pricing\BlackScholes\IBVPFDM.h" />
+    <ClInclude Include="Pricing\BlackScholes\IEulerIBVPFDM.h" />
     <ClInclude Include="Utility\BinomialStrategyType.h" />
+    <ClInclude Include="Utility\BlackScholesType.h" />
     <ClInclude Include="Utility\OptionType.h" />
-    <ClInclude Include="VegaVSAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DataStructures\dataStructuresTests.cpp" />
     <ClCompile Include="Models\FinancialModels\financialModelTests.cpp" />
     <ClCompile Include="Pricing\BinomialMethod\binomialMethodTests.cpp" />
-    <ClCompile Include="Pricing\BinomialMethod\main.cpp" />
-    <ClCompile Include="Utility\main.cpp" />
+    <ClCompile Include="Pricing\BlackScholes\testBlackScholes.cpp" />
     <ClCompile Include="Utility\Pricing.cpp" />
-    <ClCompile Include="VegaVSAPI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

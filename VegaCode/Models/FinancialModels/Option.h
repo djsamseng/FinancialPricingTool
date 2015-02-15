@@ -5,11 +5,12 @@
 
 #include "../../DataStructures/PropertySet.h"
 #include "Derivative.h"
+#include "../../Utility/OptionType.h"
 
 template <class T>
 class Option : public Derivative<T> {
     public:
-        Option() : Derivative<T>() { initializeProperties(); }
+        Option(OptionType optType) : Derivative<T>(), _optionType(optType) { initializeProperties(); }
         virtual ~Option() {}
         
         const T& interestRate() const { return _properties[INTEREST_RATE]; }
@@ -19,6 +20,8 @@ class Option : public Derivative<T> {
         const T& currentPrice() const { return _properties[CURRENT_PRICE]; }//current underlying price
         const T& costOfCarry() const { return _properties[COST_OF_CARRY]; }
         bool isCall() const { return _properties[CALL] == 1 ? true : false; }
+
+		OptionType optionType() { return _optionType; }
         
         void set(const T& ir, const T& vol, const T& strike, const T& expiry, const T& currentP, const T& carry, bool isCall);
         void setInterestRate(const T& val) { _properties[INTEREST_RATE] = val; }
@@ -37,6 +40,8 @@ class Option : public Derivative<T> {
     private:
         PropertySet<int, T> _properties;//interest rate, voltatility, strike price, expiry date, current underlying price, cost of carry
         void initializeProperties();
+		OptionType _optionType;
+		
 
         enum PROPERTY_KEYS { 
             INTEREST_RATE = 0,

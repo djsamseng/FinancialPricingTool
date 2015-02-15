@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VegaVSAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DataStructures\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -99,11 +96,29 @@
     <ClInclude Include="Pricing\BinomialMethod\BinomialMethodFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\BlackScholesType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\BlackScholesDriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\BlackScholesIBVP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\EEulerIBVPFDM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\IBVP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\IBVPFDM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pricing\BlackScholes\IEulerIBVPFDM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="VegaVSAPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataStructures\dataStructuresTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -113,13 +128,10 @@
     <ClCompile Include="Pricing\BinomialMethod\binomialMethodTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Pricing\BinomialMethod\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\Pricing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pricing\BlackScholes\testBlackScholes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
