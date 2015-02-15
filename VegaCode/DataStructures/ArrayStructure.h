@@ -13,18 +13,18 @@ class ArrayStructure : public StructureInterface<int, V>{
     public:
         // Constructors & destructor
         ArrayStructure();										
-        ArrayStructure(size_t size);									
+        ArrayStructure(int size);									
         ArrayStructure(const ArrayStructure<V>& source);				
         virtual ~ArrayStructure() {}									
 
         // Selectors
-        virtual size_t size() const { return _vector.size(); }
+        virtual int size() const { return _vector.size(); }
         //Modifiers
         virtual void pushBack(const V& value) { _vector.push_back(value); }
         virtual void popBack() { _vector.pop_back(); }
         // Operators
-        V& operator[] (size_t index) { return _vector[index]; }							
-        const V& operator[] (size_t index) const { return _vector[index]; }	
+        V& operator[] (int index) { assert(index >= 0 && index < _vector.size()); return _vector[index]; }							
+        const V& operator[] (int index) const { assert(index >= 0 && index < _vector.size()); return _vector[index]; }	
 
         ArrayStructure<V>& operator = (const ArrayStructure<V>& source);
 
@@ -40,7 +40,7 @@ ArrayStructure<V>::ArrayStructure() : StructureInterface<int, V>() {
 }
 
 template <class V>
-ArrayStructure<V>::ArrayStructure(size_t size) : StructureInterface<int, V>() {
+ArrayStructure<V>::ArrayStructure(int size) : StructureInterface<int, V>() {
 	_vector=std::vector<V>(size);
 }
 

@@ -9,7 +9,7 @@ class BlackScholesIBVP : public IBVP<T> {
         BlackScholesIBVP(Option<T>* option, int minT, int maxT, int minX, int maxX) : IBVP<T>(minT, maxT, minX, maxX), _option(option) {}
         const T diffusion(const T& x, const T& t) const;
         const T convection(const T& x, const T& t) const;
-        const T zeroTerm(const T& x, const T& t) const;
+         T zeroTerm(const T& x, const T& t) const;
         const T rightHandSide(const T& x, const T& t) const;
         const T rightBC(const T& t) const;
         const T leftBC(const T& t) const;
@@ -31,8 +31,8 @@ const T BlackScholesIBVP<T>::convection(const T& x, const T& t) const {
 }
 
 template <class T>
-const T BlackScholesIBVP<T>::zeroTerm(const T& x, const T& t) const {
-    return -1 * _option->interestRate();
+T BlackScholesIBVP<T>::zeroTerm(const T& x, const T& t) const {
+    return -1.0 * _option->interestRate();
 }
 
 template <class T>

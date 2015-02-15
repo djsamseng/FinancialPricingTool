@@ -7,20 +7,11 @@ template <class T>
 class EEulerIBVPFDM : public IBVPFDM<T> {
     public:
         EEulerIBVPFDM(IBVP<T>* ibvp, int tSteps, int xSteps) : IBVPFDM<T>(ibvp, tSteps, xSteps) {}
-        void calculateBoundaryConditions(NumericMatrix<int, T>& mat, int t);
-        void calculateSolution(NumericMatrix<int, T>& mat, NumericArray<int, T>& xArr, int t);
     private:
-        void initInitialConditions(NumericMatrix<int, T>& mat, NumericArray<int, T>& xArr);
+        void calculateBoundaryConditions(NumericMatrix<int, T>& mat, int t);
+        void calculateSolution(NumericMatrix<int, T>& mat, const NumericArray<int, T>& xArr, int t);
 };
 
-template <class T>
-void EEulerIBVPFDM<T>::initInitialConditions(NumericMatrix<int, T>& mat, NumericArray<int, T>& xArr) {
-    mat(mat.minRowIndex(), mat.minColIndex()) = this->_ibvp->leftBC(0.0);
-    mat(mat.minRowIndex(), mat.maxColIndex()) = this->_ibvp->rightBC(0.0);
-    for (int i = mat.minColIndex(); i <= mat.maxColIndex(); i++) {
-        mat(mat.minColIndex(), i) = this->_ibvp->initialC(xArr[i]);
-    }
-}
 
 template <class T>
 void EEulerIBVPFDM<T>::calculateBoundaryConditions(NumericMatrix<int, T>& mat, int t) {
@@ -29,9 +20,9 @@ void EEulerIBVPFDM<T>::calculateBoundaryConditions(NumericMatrix<int, T>& mat, i
 }
 
 template <class T>
-void EEulerIBVPFDM<T>::calculateSolution(NumericMatrix<int, T>& mat, NumericArray<int, T>& xArr, int t) {
-    double k = (this->_ibvp->maxT() - this->_ibvp->minT()) / double(this->_t_steps);
-    double h = (this->_ibvp->maxX() - this->_ibvp->minX()) / double(this->_x_steps);
+void EEulerIBVPFDM<T>::calculateSolution(NumericMatrix<int, T>& mat, const NumericArray<int, T>& xArr, int t) {
+    double k = this->_t_size;
+    double h = this->_x_size;
     for (int i = mat.minColIndex() + 1; i <= mat.maxColIndex() - 1; i++) {
         T sigma = this->_ibvp->diffusion(xArr[i], t);
         T mew = this->_ibvp->convection(xArr[i], t);

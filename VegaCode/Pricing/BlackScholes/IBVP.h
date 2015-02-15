@@ -8,7 +8,7 @@ class IBVP {
         IBVP(int minT, int maxT, int minX, int maxX) : _min_t(minT), _max_t(maxT), _min_x(minX), _max_x(maxX) {}
         virtual const T diffusion(const T& x, const T& t) const = 0;
         virtual const T convection(const T& x, const T& t) const = 0;
-        virtual const T zeroTerm(const T& x, const T& t) const = 0;
+        virtual T zeroTerm(const T& x, const T& t) const = 0;
         virtual const T rightHandSide(const T& x, const T& t) const = 0;
         virtual const T rightBC(const T& t) const = 0;
         virtual const T leftBC(const T& t) const = 0;

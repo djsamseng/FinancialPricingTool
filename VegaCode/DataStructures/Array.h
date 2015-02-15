@@ -13,7 +13,7 @@ protected:
 public:
 	// Constructors & destructor
 	Array() : m_structure(), m_start(0) {}
-    Array(I size) : m_structure(size), m_start(0) {}
+    Array(I size) : m_structure(int(size)), m_start(0) {}
     Array(I size, const V& value);
     Array(const Array<I, V, C>& source);
     virtual ~Array() {}
@@ -38,7 +38,7 @@ public:
 
 template <class I, class V, class C>
 Array<I, V, C>::Array(I size, const V& value) { 
-	m_structure = C(size_t(size));
+	m_structure = C(size);
 	m_start = 0;
     for (I i = minIndex(); i <= maxIndex(); i++) {
         (*this)[i] = value;
