@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DynamicDataDisplay, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5b7d744a7263923f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\DynamicDataDisplay\DynamicDataDisplay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -58,17 +62,22 @@
     <Compile Include="CLR\VegaCLR.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\InputValueTemplateSelector.cs" />
+    <Compile Include="Utilities\OptionPricePoint.cs" />
     <Compile Include="Utilities\Property.cs" />
     <Compile Include="Utilities\ResultValueTemplateSelector.cs" />
     <Compile Include="Utilities\Selection.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\OptionPricePlotViewModel.cs" />
     <Compile Include="ViewModel\OptionPricingViewModel.cs" />
     <Compile Include="ViewModel\PortfolioUserControl.cs" />
     <Compile Include="ViewModel\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
+    <Compile Include="View\OptionPricePlotView.xaml.cs">
+      <DependentUpon>OptionPricePlotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OptionPricingView.xaml.cs">
       <DependentUpon>OptionPricingView.xaml</DependentUpon>
     </Compile>
@@ -90,6 +99,10 @@
     <Page Include="MainWindowResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\OptionPricePlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OptionPricingView.xaml">
       <SubType>Designer</SubType>
@@ -127,7 +140,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\VegaCodeWrapper\VegaCodeWrapper.vcxproj">
       <Project>{74d097f6-f6af-47b0-ab2a-4eabab47b97d}</Project>

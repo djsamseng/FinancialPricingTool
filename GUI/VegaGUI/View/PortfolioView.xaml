@@ -12,6 +12,9 @@
             <DataTemplate DataType="{x:Type viewmodel:OptionPricingViewModel}">
                 <view:OptionPricingView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:OptionPricePlotViewModel}">
+                <view:OptionPricePlotView />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -36,7 +39,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Graph Stuff Here" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ContentControl Grid.Column="0" Content="{Binding TopLeftUserControl}" Background="Blue"/>
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="5" />
                     <TextBlock Grid.Column="2" Text="Graph Stuff Here" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
