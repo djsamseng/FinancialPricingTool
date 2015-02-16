@@ -11,6 +11,6 @@
         <d3:ChartPlotter Name="plotter" Margin="10" Padding="10">
             <d3:Header FontFamily="Georgia" Content="Option Price"/>
         </d3:ChartPlotter>
-        <ItemsControl ItemsSource="{Binding Plots}" x:Name="PlotsItemsControl" Visibility="Collapsed" />
+        <ItemsControl ItemsSource="{Binding GraphData}" x:Name="PlotsItemsControl" Visibility="Collapsed" />
     </Grid>
 </UserControl>

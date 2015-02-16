@@ -16,10 +16,11 @@ namespace FinancialPricingTool.ViewModel
 {
     public class OptionPricingViewModel : PortfolioUserControl
     {
-        public OptionPricingViewModel()
+        public OptionPricingViewModel(OptionPricePlotViewModel plotViewModel)
         {
             base.ViewName = "Option Pricing Window";
-            
+            _plotViewModel = plotViewModel;
+
             ResultProperties = new ObservableCollection<Property>();
             ResultProperties.Add(new Property(ResultKeyConstants.Price, ""));
             ResultProperties.Add(new Property(ResultKeyConstants.Delta, ""));
@@ -40,17 +41,20 @@ namespace FinancialPricingTool.ViewModel
             methodTypes.Items = methodList;
             InputProperties.Add(new Property(InputKeyConstants.BinomialType, methodTypes));
 
-            InputProperties.Add(new Property(InputKeyConstants.NumberOfSteps, 200.0));
+            InputProperties.Add(new Property(InputKeyConstants.NumberOfSteps, 5.0));
             InputProperties.Add(new Property(InputKeyConstants.InterestRate, 0.1));
             InputProperties.Add(new Property(InputKeyConstants.Volatility, 0.1));
-            InputProperties.Add(new Property(InputKeyConstants.Strike, 200.0));
+            InputProperties.Add(new Property(InputKeyConstants.Strike, 5.0));
             InputProperties.Add(new Property(InputKeyConstants.Expiry, 1.0));
             InputProperties.Add(new Property(InputKeyConstants.CostOfCarry, 0.1));
-            InputProperties.Add(new Property(InputKeyConstants.CurrentPrice, 200.0));
+            InputProperties.Add(new Property(InputKeyConstants.CurrentPrice, 4.0));
             InputProperties.Add(new Property(InputKeyConstants.IsCall, 1.0));
 
             CalculateOptionPriceCommand = new RelayCommand(param => this.CalculateOptionPrice());
         }
+
+        private OptionPricePlotViewModel _plotViewModel;
+
         private ObservableCollection<Property> _resultProperties;
         public ObservableCollection<Property> ResultProperties
         {
@@ -156,6 +160,8 @@ namespace FinancialPricingTool.ViewModel
             }
             ResultProperties.Add(new Property("", ""));
             ResultProperties.Remove(ResultProperties.Last()); //FIXME
+
+            _plotViewModel.GraphData = clr.PriceData;
         }
     }
 }

@@ -13,8 +13,9 @@ namespace FinancialPricingTool.ViewModel
         {
             base.ViewName = "Portfolio";
             Name = "New Portfolio";
-            _bottomLeftUserControl = new OptionPricingViewModel();
             _topLeftUserControl = new OptionPricePlotViewModel();
+            _bottomLeftUserControl = new OptionPricingViewModel(_topLeftUserControl as OptionPricePlotViewModel);
+            
 
             VegaCLR clr = new VegaCLR();
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Research.DynamicDataDisplay.Common;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
 using FinancialPricingTool.Utilities;
-
+using FinancialPricingTool.Model;
 namespace FinancialPricingTool.ViewModel
 {
     public class OptionPricePlotViewModel : PortfolioUserControl
@@ -15,28 +15,23 @@ namespace FinancialPricingTool.ViewModel
         public OptionPricePlotViewModel()
         {
             base.ViewName = "Option Price Plot";
-            RingArray<OptionPricePoint> PricePoints = new RingArray<OptionPricePoint>(4);
-            PricePoints.Add(new OptionPricePoint(3, 3));
-            PricePoints.Add(new OptionPricePoint(1, 4));
-
-            EnumerableDataSource<OptionPricePoint> PlotData1 = new EnumerableDataSource<OptionPricePoint>(PricePoints);
-            PlotData1.SetXMapping(x => x.Time);
-            PlotData1.SetYMapping(y => y.Price);
-
-            RingArray<OptionPricePoint> PricePoints2 = new RingArray<OptionPricePoint>(3);
-            PricePoints2.Add(new OptionPricePoint(1, 1));
-            PricePoints2.Add(new OptionPricePoint(2, 2));
-
-            EnumerableDataSource<OptionPricePoint> PlotData2 = new EnumerableDataSource<OptionPricePoint>(PricePoints2);
-            PlotData2.SetXMapping(x => x.Time);
-            PlotData2.SetYMapping(y => y.Price);
-
-            Plots = new ObservableCollection<EnumerableDataSource<OptionPricePoint>>();
-            Plots.Add(PlotData1);
-            Plots.Add(PlotData2);
+            _model = new OptionPricePlotModel();
+            
         }
-        public ObservableCollection<EnumerableDataSource<OptionPricePoint>> Plots { get; set; }
 
-        public EnumerableDataSource<OptionPricePoint> PlotData { get; set; }
+        private OptionPricePlotModel _model;
+
+        public ObservableCollection<List<double>> GraphData
+        {
+            get
+            {
+                return _model.GraphData;
+            }
+            set
+            {
+                _model.GraphData = value;
+                OnPropertyChanged("GraphData");
+            }
+        }
     } 
 }

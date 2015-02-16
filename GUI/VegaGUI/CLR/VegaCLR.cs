@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,9 @@ namespace FinancialPricingTool.CLR
         private VegaCodeWrapper wrapper;
         public VegaCLR() {
             wrapper = new VegaCodeWrapper();
+            PriceData = new ObservableCollection<List<double>>();
         }
-
+        public ObservableCollection<List<double>> PriceData { get; private set; }
         public void CalculateOption(OptionType optionType, BinomialStrategyType binomialStrategyType, int numberSteps, double interestRate, double volatility, double strike, double expiry, double currentPrice, double costOfCarry, bool isCall, ref double price, ref double delta, ref double vega) {
             wrapper.setOption((int)optionType, interestRate, volatility, strike, expiry, currentPrice, costOfCarry, isCall);
             wrapper.calculateOptionBinomial((int)binomialStrategyType, numberSteps);
@@ -37,7 +39,15 @@ namespace FinancialPricingTool.CLR
             vega = wrapper._vega;
             wrapper.calculateOptionBlackScholes(0, numberSteps, numberSteps);
             double[,] test = wrapper._price_data;
-            Console.WriteLine("{0}", test[test.GetLength(0) - 1, test.GetLength(1)-1]);
+            for (int i = 0; i < test.GetLength(0); i++)
+            {
+                List<double> tmp = new List<double>();
+                for (int j = 0; j < test.GetLength(1); j++)
+                {
+                    tmp.Add(test[i, j]);
+                }
+                PriceData.Add(tmp);
+            }
         }
     }
 }
