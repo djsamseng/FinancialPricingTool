@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
-
+using FinancialPricingTool.DatabaseServices;
 namespace FinancialPricingTool.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable

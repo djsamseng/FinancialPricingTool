@@ -3,21 +3,35 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Data;
-
+using FinancialPricingTool.DatabaseServices;
+using FinancialPricingTool.Model;
 namespace FinancialPricingTool.ViewModel
 {
     public class MainWindowViewModel : WorkspaceViewModel
     {
         ObservableCollection<WorkspaceViewModel> _workspaces;
         WorkspaceViewModel _activeWorkspace;
+        private DatabaseService _databaseService;
         public MainWindowViewModel()
         {
             base.ViewName = "Financial Pricing Tool";
+
+            _databaseService = new DatabaseService();
+            ObservableCollection<PortfolioModel> dbModels = _databaseService.GetPortfolios();
             _workspaces = new ObservableCollection<WorkspaceViewModel>();
-            PortfolioViewModel pvm = new PortfolioViewModel();
-            _workspaces.Add(pvm);
-            
+            if (dbModels.Count == 0)
+            {
+                _workspaces.Add(new PortfolioViewModel());
+            } 
+            else
+            {
+                foreach (PortfolioModel pm in dbModels)
+                {
+                    _workspaces.Add(new PortfolioViewModel(pm));
+                }
+            }
             NewPortfolioCommand = new RelayCommand(param => this.CreateNewPortfolio());
+            SavePortfoliosCommand = new RelayCommand(param => this.SavePortfolios());
         }
 
         public WorkspaceViewModel ActiveWorkspace
@@ -83,6 +97,13 @@ namespace FinancialPricingTool.ViewModel
         void SetActiveWorkspace(WorkspaceViewModel workspace)
         {
             ActiveWorkspace = workspace;
+        }
+
+        public RelayCommand SavePortfoliosCommand { get; set; }
+
+        void SavePortfolios()
+        {
+            _databaseService.SavePortfolios(Workspaces);
         }
     }
 }

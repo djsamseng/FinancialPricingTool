@@ -10,6 +10,7 @@
         <DockPanel DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="None">
             <Menu KeyboardNavigation.TabNavigation="Cycle">
                 <MenuItem Header="_File">
+                    <MenuItem Header="S_ave" Command="{Binding SavePortfoliosCommand}"/>
                     <MenuItem Header="E_xit"/>
                 </MenuItem>
                 <MenuItem Header="_Edit" />

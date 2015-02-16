@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinancialPricingTool.CLR;
-
+using FinancialPricingTool.Model;
 namespace FinancialPricingTool.ViewModel
 {
     public class PortfolioViewModel : WorkspaceViewModel
@@ -12,24 +12,34 @@ namespace FinancialPricingTool.ViewModel
         public PortfolioViewModel()
         {
             base.ViewName = "Portfolio";
+            _portfolio = new PortfolioModel();
+
             Name = "New Portfolio";
             _topLeftUserControl = new OptionPricePlotViewModel();
             _bottomLeftUserControl = new OptionPricingViewModel(_topLeftUserControl as OptionPricePlotViewModel);
-            
-
-            VegaCLR clr = new VegaCLR();
         }
 
-        private string _name;
+        public PortfolioViewModel(PortfolioModel model)
+        {
+            base.ViewName = "Portfolio";
+            _portfolio = model;
+            _topLeftUserControl = new OptionPricePlotViewModel();
+            _bottomLeftUserControl = new OptionPricingViewModel(_topLeftUserControl as OptionPricePlotViewModel);
+        }
+
+        private PortfolioModel _portfolio;
+
+        public PortfolioModel GetPorfolioModel() { return _portfolio; }
+
         public virtual string Name
         {
             get
             {
-                return _name;
+                return _portfolio.Name;
             }
             set
             {
-                _name = value;
+                _portfolio.Name = value;
                 base.OnPropertyChanged("Name");
             }
         }
