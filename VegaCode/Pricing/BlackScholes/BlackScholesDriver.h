@@ -18,7 +18,7 @@ NumericMatrix<int, T> BlackScholesDriver<T>::calculateOption(Option<T>* option, 
 	price = 0;
 	deltaR = 0;
 	vega = 0;
-	BlackScholesIBVP<T>* ibvp = new BlackScholesIBVP<T>(option, 0, tSteps, 0, xSteps);
+	BlackScholesIBVP<T>* ibvp = new BlackScholesIBVP<T>(option, 0, 1, 0, 1);
 	EEulerIBVPFDM<T> solver(ibvp, tSteps, xSteps);
 	return solver.result();
 	

@@ -10,7 +10,7 @@ class IBVPFDM {
     public:
         IBVPFDM(IBVP<T>* ibvp, int tSteps, int xSteps) : _ibvp(ibvp), _t_steps(tSteps), _x_steps(xSteps) { init(); }
         NumericMatrix<int, T> result();
-        virtual void calculateBoundaryConditions(NumericMatrix<int, T>& mat, int t) = 0;
+        virtual void calculateBoundaryConditions(NumericMatrix<int, T>& mat, const NumericArray<int, T>& xArr, int t) = 0;
         virtual void calculateSolution(NumericMatrix<int, T>& mat, const NumericArray<int, T>& xArr, int t) = 0;
     protected:
         IBVP<T>* _ibvp;
@@ -27,21 +27,26 @@ class IBVPFDM {
 
 template <class T>
 void IBVPFDM<T>::initInitialConditions(NumericMatrix<int, T>& mat, const NumericArray<int, T>& xArr) {
-    mat(mat.minRowIndex(), mat.minColIndex()) = this->_ibvp->leftBC(0.0);
-    mat(mat.minRowIndex(), mat.maxColIndex()) = this->_ibvp->rightBC(0.0);
-    for (int i = mat.minColIndex(); i <= mat.maxColIndex() - 1; i++) {
-        mat(mat.minRowIndex(), i) = this->_ibvp->initialC(xArr[i]);
+    for (int i = mat.minColIndex(); i <= mat.maxColIndex(); i++) {
+        mat(mat.minRowIndex(), i) = this->_ibvp->initialC(i * _x_size);
     }
+    mat(mat.minRowIndex(), mat.minColIndex()) = this->_ibvp->leftBC(0.0, xArr[0]);
+    mat(mat.minRowIndex(), mat.maxColIndex()) = this->_ibvp->rightBC(0.0, xArr[xArr.maxIndex()]);
+
 }
 
 template <class T>
 NumericMatrix<int, T> IBVPFDM<T>::result() {
     _mesher = Mesher<T>(_ibvp->minX(), _ibvp->maxX(), _ibvp->minT(), _ibvp->maxT());
     NumericArray<int, T> xArr = _mesher.xArr(_x_steps);
+    for (int i = 0; i <= xArr.maxIndex(); i++) {
+        xArr[i] = i * _x_size;
+    }
     NumericMatrix<int, T> result(_t_steps + 1, _x_steps + 1);
     initInitialConditions(result, xArr);
-    for (int t = _ibvp->minT(); t < _ibvp->maxT(); t++) {
-        calculateBoundaryConditions(result, t);
+    
+    for (int t = 0; t < _t_steps; t++) {
+        calculateBoundaryConditions(result, xArr, t);
         calculateSolution(result, xArr, t);
     }
     return result;
