@@ -41,13 +41,13 @@ namespace FinancialPricingTool.ViewModel
             methodTypes.Items = methodList;
             InputProperties.Add(new Property(InputKeyConstants.BinomialType, methodTypes));
 
-            InputProperties.Add(new Property(InputKeyConstants.NumberOfSteps, 5.0));
-            InputProperties.Add(new Property(InputKeyConstants.InterestRate, 0.1));
-            InputProperties.Add(new Property(InputKeyConstants.Volatility, 0.1));
-            InputProperties.Add(new Property(InputKeyConstants.Strike, 5.0));
+            InputProperties.Add(new Property(InputKeyConstants.NumberOfSteps, 10.0));
+            InputProperties.Add(new Property(InputKeyConstants.InterestRate, 0.05));
+            InputProperties.Add(new Property(InputKeyConstants.Volatility, 0.5));
+            InputProperties.Add(new Property(InputKeyConstants.Strike, 0.5));
             InputProperties.Add(new Property(InputKeyConstants.Expiry, 1.0));
             InputProperties.Add(new Property(InputKeyConstants.CostOfCarry, 0.1));
-            InputProperties.Add(new Property(InputKeyConstants.CurrentPrice, 4.0));
+            InputProperties.Add(new Property(InputKeyConstants.CurrentPrice, 0.5));
             InputProperties.Add(new Property(InputKeyConstants.IsCall, 1.0));
 
             CalculateOptionPriceCommand = new RelayCommand(param => this.CalculateOptionPrice());

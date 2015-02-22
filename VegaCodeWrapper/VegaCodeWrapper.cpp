@@ -23,6 +23,7 @@ void VegaCodeWrapper::setOption(int optionType, double interestRate, double vola
 		_option = NULL;
 	}
 	_option = OptionFactory::getOption<double>(static_cast<OptionType>(optionType));
+	_option->set(interestRate, volatility, strike, expiry, currentPrice, costOfCarry, isCall);
 }
 
 void VegaCodeWrapper::calculateOptionBinomial(int binomialStrategy, int numberSteps) {
