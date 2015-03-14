@@ -70,6 +70,7 @@
     <Compile Include="Model\MainWindowModel.cs" />
     <Compile Include="Model\OptionPricePlotModel.cs" />
     <Compile Include="Model\PortfolioModel.cs" />
+    <Compile Include="Model\StocksModel.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\InputValueTemplateSelector.cs" />
     <Compile Include="Utilities\OptionPricePoint.cs" />
@@ -77,12 +78,14 @@
     <Compile Include="Utilities\ResultValueTemplateSelector.cs" />
     <Compile Include="Utilities\Selection.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Utilities\Stock.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OptionPricePlotViewModel.cs" />
     <Compile Include="ViewModel\OptionPricingViewModel.cs" />
     <Compile Include="ViewModel\PortfolioUserControl.cs" />
     <Compile Include="ViewModel\PortfolioViewModel.cs" />
+    <Compile Include="ViewModel\StocksViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
     <Compile Include="View\OptionPricePlotView.xaml.cs">
@@ -93,6 +96,9 @@
     </Compile>
     <Compile Include="View\PortfolioView.xaml.cs">
       <DependentUpon>PortfolioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StocksView.xaml.cs">
+      <DependentUpon>StocksView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PortfolioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StocksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

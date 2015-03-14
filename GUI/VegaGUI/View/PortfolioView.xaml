@@ -15,6 +15,9 @@
             <DataTemplate DataType="{x:Type viewmodel:OptionPricePlotViewModel}">
                 <view:OptionPricePlotView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:StocksViewModel}">
+                <view:StocksView />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -52,17 +55,7 @@
                     </Grid.ColumnDefinitions>
                     <ContentControl Grid.Column="0" Content="{Binding BottomLeftUserControl}" Background="Blue"/>
                     <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="5" />
-                    <Border Grid.Column="2" >
-                        <Grid Background="Beige">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Underlyings" FontSize="18" Margin="5" TextDecorations="Underline"/>
-                            <Button Grid.Row="1" HorizontalAlignment="Center" Content="Add Underlying" Command="" />
-                        </Grid>
-                    </Border>
+                    <ContentControl Grid.Column="2" Content="{Binding BottomRightUserControl}" />
                 </Grid>
             </Grid>
         </Border>

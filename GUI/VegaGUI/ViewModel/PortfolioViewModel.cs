@@ -15,16 +15,20 @@ namespace FinancialPricingTool.ViewModel
             _portfolio = new PortfolioModel();
 
             Name = "New Portfolio";
-            _topLeftUserControl = new OptionPricePlotViewModel();
-            _bottomLeftUserControl = new OptionPricingViewModel(_topLeftUserControl as OptionPricePlotViewModel);
+            initPanels();
         }
 
         public PortfolioViewModel(PortfolioModel model)
         {
             base.ViewName = "Portfolio";
             _portfolio = model;
+           initPanels();
+        }
+
+        private void initPanels() {
             _topLeftUserControl = new OptionPricePlotViewModel();
             _bottomLeftUserControl = new OptionPricingViewModel(_topLeftUserControl as OptionPricePlotViewModel);
+            _bottomRightUserControl = new StocksViewModel();
         }
 
         private PortfolioModel _portfolio;
@@ -43,6 +47,19 @@ namespace FinancialPricingTool.ViewModel
                 base.OnPropertyChanged("Name");
             }
         }
+        private PortfolioUserControl _topLeftUserControl;
+        public PortfolioUserControl TopLeftUserControl
+        {
+            get
+            {
+                return _topLeftUserControl;
+            }
+            set
+            {
+                _topLeftUserControl = value;
+                base.OnPropertyChanged("TopLeftUserControl");
+            }
+        }
 
         private PortfolioUserControl _bottomLeftUserControl;
         public PortfolioUserControl BottomLeftUserControl
@@ -57,18 +74,20 @@ namespace FinancialPricingTool.ViewModel
                 base.OnPropertyChanged("BottomLeftUserControl");
             }
         }
-        private PortfolioUserControl _topLeftUserControl;
-        public PortfolioUserControl TopLeftUserControl
+
+        private PortfolioUserControl _bottomRightUserControl;
+        public PortfolioUserControl BottomRightUserControl
         {
             get
             {
-                return _topLeftUserControl;
+                return _bottomRightUserControl;
             }
             set
             {
-                _topLeftUserControl = value;
-                base.OnPropertyChanged("TopLeftUserControl");
+                _bottomRightUserControl = value;
+                base.OnPropertyChanged("BottomRightUserControl");
             }
         }
+        
     }
 }
