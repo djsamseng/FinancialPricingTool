@@ -15,9 +15,18 @@ namespace FinancialPricingTool.ViewModel
         public MainWindowViewModel()
         {
             base.ViewName = "Financial Pricing Tool";
-
-            _databaseService = new DatabaseService();
-            ObservableCollection<PortfolioModel> dbModels = _databaseService.GetPortfolios();
+            try {
+                _databaseService = new DatabaseService();
+            }
+            catch (Exception e)
+            {
+                _databaseService = null;
+            }
+            ObservableCollection<PortfolioModel> dbModels = new ObservableCollection<PortfolioModel>();
+            if (_databaseService != null)
+            {
+                 dbModels = _databaseService.GetPortfolios();
+            }
             _workspaces = new ObservableCollection<WorkspaceViewModel>();
             if (dbModels.Count == 0)
             {
@@ -103,7 +112,10 @@ namespace FinancialPricingTool.ViewModel
 
         void SavePortfolios()
         {
-            _databaseService.SavePortfolios(Workspaces);
+            if (_databaseService != null)
+            {
+                _databaseService.SavePortfolios(Workspaces);
+            }
         }
     }
 }

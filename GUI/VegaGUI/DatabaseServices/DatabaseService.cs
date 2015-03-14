@@ -21,6 +21,10 @@ namespace FinancialPricingTool.DatabaseServices
             string _connectionString = "mongodb://localhost";
             MongoClient _client = new MongoClient(_connectionString);
             var server = _client.GetServer();
+            if (server.State == MongoServerState.Disconnected)
+            {
+                throw new Exception();
+            }
             _database = server.GetDatabase("ProjectVega");
         }
 
