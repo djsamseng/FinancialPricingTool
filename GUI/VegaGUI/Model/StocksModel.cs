@@ -23,7 +23,6 @@ namespace FinancialPricingTool.Model
                 if (_stocks == null)
                 {
                     _stocks = new ObservableCollection<Stock>();
-                    _stocks.Add(new Stock() { Name = "GOOG" });
                 }
                 return _stocks;
             }

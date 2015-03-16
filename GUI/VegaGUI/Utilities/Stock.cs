@@ -14,12 +14,42 @@ namespace FinancialPricingTool.Utilities
         }
 
         public string Name { get; set; }
-        public List<StockPrice> Prices { get; set; }
+
+        private List<StockPrice> _prices;
+        public List<StockPrice> Prices
+        {
+            get
+            {
+                if (_prices == null)
+                {
+                    _prices = new List<StockPrice>();
+                }
+                return _prices;
+            }
+            set
+            {
+                _prices = value;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Stock)
+            {
+                return (obj as Stock).Name == this.Name;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
     }
 
     public class StockPrice 
     {
-        public DateTime Date { get; set; }
-        public double Price { get; set; }
+        public string Date { get; set; }
+        public decimal Close { get; set; }
     }
 }

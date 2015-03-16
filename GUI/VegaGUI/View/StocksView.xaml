@@ -3,13 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:FinancialPricingTool.View"
+             xmlns:viewmodel="clr-namespace:FinancialPricingTool.ViewModel"
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewmodel:StockPlotViewModel}">
+                <view:StockPlotView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding StockPlot}" Grid.Column="0" />
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -19,7 +29,7 @@
                 <TextBox Width="50" Text="{Binding AddStockTextBox}" />
                 <Button Command="{Binding AddStockCommand}" Content="Add Stock" />
             </StackPanel>
-            <ListBox Grid.Row="1" ItemsSource="{Binding Stocks}">
+            <ListBox Grid.Row="1" ItemsSource="{Binding Stocks}" SelectedItem="{Binding SelectedStock, UpdateSourceTrigger=PropertyChanged}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />

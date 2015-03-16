@@ -31,6 +31,7 @@ namespace FinancialPricingTool.ViewModel
             if (dbModels.Count == 0)
             {
                 _workspaces.Add(new PortfolioViewModel());
+                ActiveWorkspace = _workspaces[0];
             } 
             else
             {
