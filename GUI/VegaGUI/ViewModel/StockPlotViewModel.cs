@@ -13,7 +13,6 @@ namespace FinancialPricingTool.ViewModel
     {
         public StockPlotViewModel()
         {
-
         }
 
         private Stock _stock;
@@ -26,6 +25,7 @@ namespace FinancialPricingTool.ViewModel
             set
             {
                 _stock = value;
+                _stock.Prices = YahooFinance.GetStockPrices(value.Name);
                 _stockData = null;
                 OnPropertyChanged("Stock");
                 OnPropertyChanged("StockData");

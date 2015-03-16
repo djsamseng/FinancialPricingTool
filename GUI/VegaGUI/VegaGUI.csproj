@@ -79,6 +79,7 @@
     <Compile Include="Utilities\Selection.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Utilities\Stock.cs" />
+    <Compile Include="Utilities\YahooFinance.cs" />
     <Compile Include="ViewModel\CommandViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\OptionPricePlotViewModel.cs" />

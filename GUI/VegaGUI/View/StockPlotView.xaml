@@ -11,6 +11,5 @@
             <d3:Header FontFamily="Georgia" Content="{Binding Stock.Name}"/>
             <d3:LineGraph DataSource="{Binding StockData}" />
         </d3:ChartPlotter>
-        <!--ItemsControl ItemsSource="{Binding GraphData}" x:Name="PlotsItemsControl" Visibility="Collapsed" /-->
     </Grid>
 </UserControl>

@@ -11,37 +11,7 @@ using FinancialPricingTool.Utilities;
 
 namespace FinancialPricingTool.ViewModel
 {
-    public static class YahooFinance
-    {
-        public static List<StockPrice> Parse(string csvData)
-        {
-            List<StockPrice> prices = new List<StockPrice>();
-
-            string[] rows = csvData.Replace("\r", "").Split('\n');
-
-            foreach (string row in rows)
-            {
-                if (string.IsNullOrEmpty(row)) continue;
-
-                string[] cols = row.Split(',');
-
-                
-                StockPrice p = new StockPrice();
-                p.Date = cols[0];
-                try
-                {
-                    p.Close = Convert.ToDecimal(cols[4]);
-                    prices.Add(p);
-                } 
-                catch (Exception)
-                {
-                }
-            }
-
-            return prices;
-        }
-    }
-
+    
     public class StocksViewModel : PortfolioUserControl
     {
         private StocksModel _stocks;
@@ -50,32 +20,7 @@ namespace FinancialPricingTool.ViewModel
             _stocks = new StocksModel();
             AddStock("GOOG");
             AddStockCommand = new RelayCommand(param => AddStock(AddStockTextBox));
-            string csvData;
-            string folderLocation = @"..\..\data\";
-            string googLocation = @"..\..\data\goog.txt";
-
-            if (File.Exists(googLocation))
-            {
-                csvData = File.ReadAllText(googLocation);
-            }
-            else
-            {
-                using (WebClient web = new WebClient())
-                {
-                    DateTime today = DateTime.Today;
-                    DateTime start = today.AddMonths(-1);
-                    string url = string.Format("http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g=d&ignore=.csv", "GOOG", start.Month - 1, start.Day, start.Year, today.Month - 1, today.Day, today.Year);
-                    csvData = web.DownloadString(url);
-                    if (!Directory.Exists(folderLocation))
-                    {
-                        Directory.CreateDirectory(folderLocation);
-                    }
-                    File.WriteAllText(googLocation, csvData);
-                }
-            }
-
-            List<StockPrice> prices = YahooFinance.Parse(csvData);
-            StockPlot.Stock.Prices = prices;
+            
         }
 
         public ObservableCollection<Stock> Stocks

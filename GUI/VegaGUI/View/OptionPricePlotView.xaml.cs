@@ -19,6 +19,7 @@ namespace FinancialPricingTool.View
         public OptionPricePlotView()
         {
             InitializeComponent();
+            plotter.LegendVisible = false;
             ((INotifyCollectionChanged)PlotsItemsControl.Items).CollectionChanged += OptionPricePlotView_CollectionChanged;
         }
 
@@ -45,6 +46,7 @@ namespace FinancialPricingTool.View
 
                 plotter.AddLineGraph(linePlotData);
             }
+            plotter.LegendVisible = false;
         }
     }
 }

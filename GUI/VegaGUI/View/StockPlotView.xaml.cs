@@ -23,6 +23,7 @@ namespace FinancialPricingTool.View
         public StockPlotView()
         {
             InitializeComponent();
+            plotter.LegendVisible = false; //In .xaml broken
         }
     }
 }
