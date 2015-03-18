@@ -18,15 +18,19 @@ void testBlackScholes() {
     opt->setStrike(0.5);
     opt->setInterestRate(0.05);
     opt->setVolatility(0.2);
-    BlackScholesIBVP<double>* ibvp = new BlackScholesIBVP<double>(opt, 0, 1, 0, 1);
-    EEulerIBVPFDM<double> solver(ibvp, 10, 10);
-    std::cout << "Explicit Euler: " << std::endl;
-    print(solver.result());
-    IEulerIBVPFDM<double> s2(ibvp, 10, 10);
-    std::cout << "Implicit Euler: " << std::endl;
-    print(s2.result());
+    opt->setCurrentPrice(1);
+    
     BlackScholesDriver<double> driver;
-    NumericMatrix<int, double> s3 = driver.calculateOption(opt, static_cast<BlackScholesType>(0), 10, 10);
-    print(s3);
+    NumericMatrix<int, double> s = driver.calculateOption(opt, static_cast<BlackScholesType>(0), 10, 10);
+    std::cout << "Explicit Euler" << std::endl;
+    print(s);
+
+    opt->setStrike(150);
+    opt->setCurrentPrice(150);
+    s = driver.calculateOption(opt, static_cast<BlackScholesType>(1), 10, 10);
+    std::cout << "Explicit Euler" << std::endl;
+    print(s);
+
+    delete opt;
     std::cout << "Black Scholes Tests Complete" << std::endl;
 }

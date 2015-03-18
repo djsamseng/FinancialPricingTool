@@ -31,8 +31,9 @@ void EEulerIBVPFDM<T>::calculateSolution(NumericMatrix<int, T>& mat, const Numer
         T alpha = k * sigma - 0.5 * k * h * mew;
         T beta = h * h - 2 * k * sigma + k * h * h * zero_term;
         T gamma = k * sigma + 0.5 * k * h * mew;
-
+        
         mat(t+1, i) = alpha * mat(t, i-1) + beta * mat(t, i) + gamma * mat(t, i+1) / (h * h) - k * this->_ibvp->rightHandSide(t * k, xArr[i]);
     }
+    
 }
 #endif
