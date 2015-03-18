@@ -2,6 +2,7 @@
 #include <assert.h>
 
 #include "../../Models/FinancialModels/OptionFactory.h"
+#include "BlackScholesDriver.h"
 #include "BlackScholesIBVP.h"
 #include "EEulerIBVPFDM.h"
 #include "IEulerIBVPFDM.h"
@@ -24,5 +25,8 @@ void testBlackScholes() {
     IEulerIBVPFDM<double> s2(ibvp, 10, 10);
     std::cout << "Implicit Euler: " << std::endl;
     print(s2.result());
+    BlackScholesDriver<double> driver;
+    NumericMatrix<int, double> s3 = driver.calculateOption(opt, static_cast<BlackScholesType>(0), 10, 10);
+    print(s3);
     std::cout << "Black Scholes Tests Complete" << std::endl;
 }

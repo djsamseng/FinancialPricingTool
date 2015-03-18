@@ -10,16 +10,20 @@
 #include "../../DataStructures/Lattice.h"
 #include "../../Models/FinancialModels/Option.h"
 
+
 template <class T>
 class BinomialMethod {
     //Workflow: Constructor, buildLattice, price
     public:
         BinomialMethod(double rate, BinomialStrategy<T> *strategy);
-       
+        virtual ~BinomialMethod() {} 
+         
+
         virtual void constructLattice(int size, const T& initial_price, Option<T>* option) = 0;
         virtual T price() const = 0;
-        virtual T delta() const = 0;
-        virtual T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const = 0;
+        T delta() const;
+        T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const;
+        T rho(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const;
         
         const DS::Array<int, NumericArray<int, T> >& lattice() const { return _lattice; }
            
@@ -31,6 +35,8 @@ class BinomialMethod {
         
         void buildLattice(int size, const T& initialUp);
         void calculatePayoff(Option<T> *option);
+        virtual BinomialMethod<T>* copy() const = 0; //Copies type strategy and rate but not lattice
+
 };
 
 template <class T>
@@ -69,5 +75,67 @@ void BinomialMethod<T>::calculatePayoff(Option<T> *option) {
         assert(false);
     }
 }
+
+template <class T>
+T BinomialMethod<T>::delta() const {
+    int time_index = this->_lattice.minIndex() + 1;
+    assert(time_index <= this->_lattice.maxIndex());
+
+    int down_index = this->_lattice[time_index].minIndex();
+    assert(down_index + 1 <= this->_lattice[time_index].maxIndex());
+    assert(time_index == 1 && down_index == 0);
+    return (this->_lattice[time_index][down_index + 1].second - this->_lattice[time_index][down_index].second) / (this->_lattice[time_index][down_index + 1].first - this->_lattice[time_index][down_index].first);
+}
+
+template <class T>
+T BinomialMethod<T>::vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const {
+    double delta_volatility = 0.01;
+    double original_volatility = strategy->volatility();
+
+    strategy->setVolatility(original_volatility + delta_volatility);
+    strategy->build();
+    
+    BinomialMethod<T> *other = this->copy();
+    int min_index = this->_lattice.minIndex();
+    
+    other->constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
+    T price_high = other->price();
+    
+    strategy->setVolatility(original_volatility - delta_volatility);
+    strategy->build();
+    other->constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
+    T price_low = other->price();
+
+    strategy->setVolatility(original_volatility);
+    strategy->build();
+    delete other;
+    return (price_high - price_low) / (2 * delta_volatility);
+}
+
+template <class T>
+T BinomialMethod<T>::rho(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const {
+    double delta_rate = 0.01;
+    double original_rate = option->interestRate();
+    strategy->setInterest(original_rate + delta_rate);
+    strategy->build();
+    
+    BinomialMethod<T> *other = this->copy();
+    int min_index = this->_lattice.minIndex();
+    
+    other->constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
+    T price_high = other->price();
+    
+    strategy->setVolatility(original_rate - delta_rate);
+    strategy->build();
+    other->constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
+    T price_low = other->price();
+
+    strategy->setInterest(original_rate);
+    strategy->build();
+    delete other;
+    return (price_high - price_low) / (2 * delta_rate);
+}
+
+
 
 #endif

@@ -2,7 +2,6 @@
 #define BINOMIAL_METHOD_DRIVER_H
 
 
-#include "BinomialMethod.h"
 #include "BinomialMethodFactory.h"
 #include "BinomialMethodStrategies/BinomialStrategy.h"
 #include "BinomialMethodStrategies\BinomialStrategyFactory.h"

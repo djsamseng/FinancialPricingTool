@@ -30,9 +30,11 @@ void testBinomialMethod() {
     EuropeanOption<double> *opt = new EuropeanOption<double>;
     opt->setStrike(150.0);
     opt->setIsCall(true);
+    opt->setCurrentPrice(150.0);
+    opt->setInterestRate(0.15);
 
     int number_steps = 10;
-    double initial_underlying = 200.0;
+    double initial_underlying = 150.0;
     double delta = opt->expiry() / double(number_steps);
     double discount_rate = exp(-1 * opt->interestRate() * delta);
 
@@ -43,6 +45,7 @@ void testBinomialMethod() {
     std::cout << "Price: " << solver.price() << std::endl;
     std::cout << "Delta: " << solver.delta() << std::endl;
     std::cout << "Vega: " << solver.vega(discount_rate, strategy, opt) << std::endl;
+    std::cout << "Rho: " << solver.rho(discount_rate, strategy, opt) << std::endl;
     
     delete opt;
     delete strategy;
@@ -58,6 +61,7 @@ void testBinomialMethod() {
     std::cout << "Price American: " << aSolver.price() << std::endl;
     std::cout << "Delta American: " << aSolver.delta() << std::endl;
     std::cout << "Vega American: " << aSolver.vega(discount_rate, aStrategy, aOpt) << std::endl;
+    std::cout << "Rho American: " << aSolver.rho(discount_rate, aStrategy, aOpt) << std::endl;
 
     delete aOpt;
     delete aStrategy;

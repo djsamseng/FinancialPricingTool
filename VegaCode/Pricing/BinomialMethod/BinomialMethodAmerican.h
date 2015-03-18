@@ -15,8 +15,7 @@ class BinomialMethodAmerican : public BinomialMethod<T> {
         BinomialMethodAmerican(double rate, BinomialStrategy<T> *strategy) : BinomialMethod<T>(rate, strategy) {}
         void constructLattice(int size, const T& initial_price, Option<T>* option);
         T price() const;
-        T delta() const;
-        T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const;
+        BinomialMethod<T>* copy() const;
 
 };
 
@@ -40,40 +39,7 @@ T BinomialMethodAmerican<T>::price() const {
 }
 
 template <class T>
-T BinomialMethodAmerican<T>::delta() const {
-    int time_index = this->_lattice.minIndex() + 1;
-    assert(time_index <= this->_lattice.maxIndex());
-
-    int down_index = this->_lattice[time_index].minIndex();
-    assert(down_index + 1 <= this->_lattice[time_index].maxIndex());
-
-    return (this->_lattice[time_index][down_index + 1].second - this->_lattice[time_index][down_index].second) / (this->_lattice[time_index][down_index + 1].first - this->_lattice[time_index][down_index].first);
+BinomialMethod<T>* BinomialMethodAmerican<T>::copy() const {
+    return new BinomialMethodAmerican<T>(this->_rate, this->_strategy);
 }
-
-template <class T>
-T BinomialMethodAmerican<T>::vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const {
-    double delta_volatility = 0.1;
-    double original_volatility = strategy->volatility();
-
-    strategy->setVolatility(original_volatility + delta_volatility);
-    strategy->build();
-    
-    BinomialMethodAmerican<T> other = BinomialMethodAmerican<T>(rate, strategy);
-    int min_index = this->_lattice.minIndex();
-    
-    other.constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
-    T price_high = other.price();
-    
-    strategy->setVolatility(original_volatility - delta_volatility);
-    strategy->build();
-    other.constructLattice(this->_lattice.size(), this->_lattice[min_index][this->_lattice[min_index].minIndex()].first, option);
-    T price_low = other.price();
-
-    strategy->setVolatility(original_volatility);
-    strategy->build();
-    return (price_high - price_low) / delta_volatility;
-
-}
-
-
 #endif
