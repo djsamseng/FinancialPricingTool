@@ -10,10 +10,15 @@
 
 template <class T>
 class BinomialMethodDriver {
-public:
-	BinomialMethodDriver() {}
-	void calculateOption(Option<T>* option, BinomialStrategyType binomialStrategy, int numberSteps);
-	T price, deltaR, vega;
+    public:
+        BinomialMethodDriver() {}
+        void calculateOption(Option<T>* option, BinomialStrategyType binomialStrategy, int numberSteps);
+        const T& price() const { return _price; }
+        const T& delta() const { return _deltaR; }
+        const T& vega() const { return _vega; }
+        const T& rho() const { return _rho; }
+    private:
+        T _price, _deltaR, _vega, _rho;
 };
 
 template <class T>
@@ -25,9 +30,10 @@ void BinomialMethodDriver<T>::calculateOption(Option<T>* option, BinomialStrateg
 	BinomialMethod<T> *solver = BinomialMethodFactory::getBinomialMethod<T>(option->optionType(), discount_rate, strategy);
 
 	solver->constructLattice(numberSteps, option->currentPrice(), option);
-	price = solver->price();
-	deltaR = solver->delta();
-	vega = solver->vega(option->interestRate(), strategy, option);
+	_price = solver->price();
+	_deltaR = solver->delta();
+	_vega = solver->vega(option->interestRate(), strategy, option);
+    _rho = solver->rho(option->interestRate(), strategy, option);
 
 	delete strategy;
 	delete solver;

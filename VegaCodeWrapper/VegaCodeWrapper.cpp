@@ -30,9 +30,9 @@ void VegaCodeWrapper::calculateOptionBinomial(int binomialStrategy, int numberSt
 	if (_option != NULL) {
 		BinomialMethodDriver<double> driver;
 		driver.calculateOption(_option, static_cast<BinomialStrategyType>(binomialStrategy), numberSteps);
-		_price = driver.price;
-		_delta = driver.deltaR;
-		_vega = driver.vega;
+		_price = driver.price();
+		_delta = driver.deltaR();
+		_vega = driver.vega();
 	}
 }
 
@@ -40,9 +40,9 @@ void VegaCodeWrapper::calculateOptionBlackScholes(int strategyType, int tSteps, 
 	if (_option != NULL) {
 		BlackScholesDriver<double> driver;
 		NumericMatrix<int, double> result = driver.calculateOption(_option, static_cast<BlackScholesType>(strategyType), tSteps, xSteps);
-		_price = driver.price;
-		_delta = driver.deltaR;
-		_vega = driver.vega;
+		_price = driver.price();
+		_delta = driver.deltaR();
+		_vega = driver.vega();
 		_price_data = gcnew array < double, 2 >(result.numRows(), result.numCols());
 		for (int i = 0; i <= result.maxRowIndex(); i++) {
 			for (int j = 0; j <= result.maxColIndex(); j++) {

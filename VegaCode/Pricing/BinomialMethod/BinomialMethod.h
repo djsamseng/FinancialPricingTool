@@ -22,9 +22,10 @@ class BinomialMethod {
         virtual void constructLattice(int size, const T& initial_price, Option<T>* option) = 0;
         virtual T price() const = 0;
         T delta() const;
+        T gamma() const;
         T vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const;
         T rho(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const;
-        
+         
         const DS::Array<int, NumericArray<int, T> >& lattice() const { return _lattice; }
            
         void printLattice() const { _lattice.print(); }
@@ -36,6 +37,8 @@ class BinomialMethod {
         void buildLattice(int size, const T& initialUp);
         void calculatePayoff(Option<T> *option);
         virtual BinomialMethod<T>* copy() const = 0; //Copies type strategy and rate but not lattice
+
+        T delta(int offset) const;
 
 };
 
@@ -78,14 +81,28 @@ void BinomialMethod<T>::calculatePayoff(Option<T> *option) {
 
 template <class T>
 T BinomialMethod<T>::delta() const {
-    int time_index = this->_lattice.minIndex() + 1;
+    return delta(0);    
+}
+
+template <class T>
+T BinomialMethod<T>::delta(int offset) const {
+    int time_index = this->_lattice.minIndex() + 1 + offset;
     assert(time_index <= this->_lattice.maxIndex());
 
     int down_index = this->_lattice[time_index].minIndex();
     assert(down_index + 1 <= this->_lattice[time_index].maxIndex());
-    assert(time_index == 1 && down_index == 0);
+    assert(time_index == 1 + offset && down_index == 0);
     return (this->_lattice[time_index][down_index + 1].second - this->_lattice[time_index][down_index].second) / (this->_lattice[time_index][down_index + 1].first - this->_lattice[time_index][down_index].first);
+
 }
+
+template <class T>
+T BinomialMethod<T>::gamma() const {
+    int time_index = this->_lattice.minIndex() + 1;
+    int down_index = this->_lattice[time_index].minIndex();
+    return (delta(1) - delta(0)) / (this->_lattice[time_index][down_index + 1].first - this->_lattice[time_index][down_index].first);
+}
+
 
 template <class T>
 T BinomialMethod<T>::vega(double rate, BinomialStrategy<T> *strategy, Option<T> *option) const {

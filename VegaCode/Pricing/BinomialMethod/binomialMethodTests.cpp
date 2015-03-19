@@ -44,6 +44,7 @@ void testBinomialMethod() {
 
     std::cout << "Price: " << solver.price() << std::endl;
     std::cout << "Delta: " << solver.delta() << std::endl;
+    std::cout << "Gamma: " << solver.gamma() << std::endl;
     std::cout << "Vega: " << solver.vega(discount_rate, strategy, opt) << std::endl;
     std::cout << "Rho: " << solver.rho(discount_rate, strategy, opt) << std::endl;
     
@@ -60,6 +61,7 @@ void testBinomialMethod() {
     aSolver.constructLattice(number_steps, initial_underlying, aOpt);
     std::cout << "Price American: " << aSolver.price() << std::endl;
     std::cout << "Delta American: " << aSolver.delta() << std::endl;
+    std::cout << "Gamma American: " << aSolver.gamma() << std::endl;
     std::cout << "Vega American: " << aSolver.vega(discount_rate, aStrategy, aOpt) << std::endl;
     std::cout << "Rho American: " << aSolver.rho(discount_rate, aStrategy, aOpt) << std::endl;
 
