@@ -37,7 +37,7 @@ namespace FinancialPricingTool.CLR
             price = wrapper._price;
             delta = wrapper._delta;
             vega = wrapper._vega;
-            wrapper.calculateOptionBlackScholes(0, numberSteps, numberSteps);
+            wrapper.calculateOptionBlackScholes(1, numberSteps, numberSteps);
             double[,] test = wrapper._price_data;
             for (int i = 0; i < test.GetLength(0); i++)
             {
