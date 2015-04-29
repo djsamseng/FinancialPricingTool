@@ -8,16 +8,17 @@ using namespace std;
 using namespace Eigen;
 
 void logisticRegressionTests() {
-    MatrixXd m(2,2);
+    MatrixXd m(3,2);
     m << 1, 4,
-        5, -2;
-    VectorXd v(2);
-    v << 0, 1;
+        5, -2,
+        5, 2;
+    VectorXd v(3);
+    v << 0, 1, 2;
     LogisticRegression<double> lr;
     lr.train(m, v);
     VectorXd input(2);
-    input << 1, 4;
-    cout << "Probability of classification as 1 = " << lr.hypothesis(input) << endl;
+    input << 5, -2;
+    cout << "Probabilities: " << endl << lr.hypothesis(input) << endl;
 }
 
 int main() {
